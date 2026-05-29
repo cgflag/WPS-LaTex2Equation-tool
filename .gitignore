@@ -1,0 +1,20 @@
+__pycache__/
+.pytest_cache/
+dist/
+build/
+*.spec
+examples/ci_smoke_out.docx
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+*.log
+.DS_Store
+Thumbs.db
+# 仅提交 examples 内演示 docx，避免误传本地专利/样例
+*.docx
+!examples/demo_before.docx
+!examples/demo_after.docx
+*_converted.docx
+sample_*.docx

@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package with dev deps
+        run: pip install -e ".[dev]"
+
+      - name: Run pytest
+        run: pytest -q
+
+  smoke-convert:
+    name: Full conversion smoke (Windows + Office XSL)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Convert examples if MML2OMML.XSL exists
+        shell: pwsh
+        run: |
+          $candidates = @(
+            "C:\Program Files\Microsoft Office\root\Office16\MML2OMML.XSL",
+            "C:\Program Files (x86)\Microsoft Office\root\Office16\MML2OMML.XSL"
+          )
+          $xsl = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $xsl) {
+            Write-Host "::warning::MML2OMML.XSL not on runner; skipping full docx conversion (unit tests still ran)."
+            exit 0
+          }
+          python convert_latex_docx.py examples/demo_before.docx examples/ci_smoke_out.docx --xsl $xsl
+          if (-not (Test-Path examples/ci_smoke_out.docx)) { throw "Output docx not created" }
+          Write-Host "Smoke conversion OK"

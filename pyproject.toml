@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "patent-math-tool"
+version = "1.0.0"
+description = "Batch convert $...$ / $$...$$ LaTeX in docx to native OMML equations for Word and WPS (no COM, no MathType)."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+keywords = [
+    "latex",
+    "docx",
+    "equation",
+    "wps",
+    "word",
+    "omml",
+    "mathml",
+    "patent",
+    "formula",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Text Processing :: Markup",
+]
+dependencies = [
+    "lxml>=5.0.0",
+    "latex2mathml>=3.77.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+patent-math = "convert_latex_docx:main"
+docx-latex-math = "convert_latex_docx:main"
+
+[project.urls]
+Homepage = "https://github.com/YOUR_USER/patent-math-tool"
+Repository = "https://github.com/YOUR_USER/patent-math-tool"
+Issues = "https://github.com/YOUR_USER/patent-math-tool/issues"
+
+[tool.setuptools]
+py-modules = ["convert_latex_docx"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

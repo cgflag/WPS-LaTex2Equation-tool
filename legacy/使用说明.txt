@@ -1,0 +1,110 @@
+字体与括号样式（v3 更新）
+-------------------------
+1. 转换时会继承原段落的 w:rPr（字号、字体），避免公式附近文字丢失格式变成默认五号
+2. 公式内括号 ()[]{} 及逗号、等号等自动设为正体（非斜体），变量字母保持斜体
+3. 块级公式（整段独立公式）：段首 `\t` + 公式 + `\t` + `(1)(2)...`
+   - 默认 --tab-mode page：按纸张自适应（居中=页宽/2，居右=页宽-右边距）
+   - 固定字符制表位：--tab-mode chars --tab-center-chars 21 --tab-right-chars 44
+4. 若需指定字号，可加参数：
+     python convert_latex_docx.py input.docx output.docx --size 小四
+   可选：小四(24)、四号(28)、五号(21)，或直接填半磅值如 24
+
+编码问题说明（重要）
+--------------------
+WPS VBA 编辑器通常只认 GBK/ANSI 编码。若 .bas 文件含 UTF-8 中文，
+MsgBox 会乱码，甚至把代码片段显示出来（你遇到的情况）。
+
+本版已将宏内所有 MsgBox 改为英文 ASCII，避免乱码。
+
+CheckOMathSupport 结果解读
+--------------------------
+重新导入 LaTeXToEquation.bas 后，Alt+F8 运行 CheckOMathSupport：
+
+| 显示内容 | 含义 |
+|---------|------|
+| OMaths: OK | 支持公式接口，可运行 ConvertAllLaTeXFormulas |
+| OMaths: NOT SUPPORTED | WPS 无 OMaths，需改用 Microsoft Word |
+| OMaths: PARTIAL | 能创建公式但 BuildUp 失败，LaTeX 可能无法正确渲染 |
+| OMaths: FAIL | 连基本 Range 写入都失败，检查文档是否可编辑 |
+
+注意：检测会在文档开头插入测试公式 x^2，成功后请手动删除。
+
+WPS 文字使用说明（更新）
+========================
+
+若之前版本报「语法错误」，请重新导入本文件 LaTeXToEquation.bas（WPS 兼容版）。
+
+WPS 常见语法错误原因
+--------------------
+1. Private Type 自定义类型 —— 已移除，改用 Collection 存储
+2. Dim x As OMath 强类型 —— 已改为 Dim x As Object
+3. Dim col As New Collection —— 已改为 Set col = New Collection
+
+重新安装步骤（WPS）
+-------------------
+1. 打开 WPS 文字 → 按 Alt+F11 进入 VBA 编辑器
+2. 若已有旧模块 LaTeXToEquation：右键 → 移除模块（不要导出）
+3. 文件 → 导入文件 → 选择 LaTeXToEquation.bas
+4. 若顶部出现 Attribute VB_Name 行报错：删除该行后保存（部分 WPS 版本会误报）
+
+先运行诊断
+----------
+Alt+F8 → 运行 CheckOMathSupport
+
+- 若显示「OMaths 接口：不支持」→ WPS 版本不支持 Word 公式对象，本宏无法自动转换，需改用 Microsoft Word 或 Pandoc 方案
+- 若显示「支持」→ 再运行 ConvertAllLaTeXFormulas
+
+主功能
+------
+- ConvertAllLaTeXFormulas  全文转换
+- ConvertLaTeXInSelection    选区转换
+- CheckOMathSupport          环境检测（新增）
+
+
+功能
+----
+1. 扫描正文全部段落（不含页眉页脚、文本框、表格）
+2. 识别 $...$（行内）和 $$...$$（块级）中的 LaTeX
+3. 转为 Word 原生公式对象（OMath.BuildUp）
+4. 块级公式（整段只有一个公式）：居中，并在行末添加 (1)(2)... 编号
+5. 转换失败时保留原 $...$ 文本（不破坏文档）
+
+安装步骤
+--------
+1. 打开你的 .docx 文档
+2. 按 Alt+F11 打开 VBA 编辑器
+3. 菜单：文件 → 导入文件 → 选择 LaTeXToEquation.bas
+4. 关闭 VBA 编辑器
+5. 若提示宏被禁用：文件 → 选项 → 信任中心 → 信任中心设置 → 宏设置 → 启用所有宏（或添加受信任位置）
+6. 建议先将文档另存为 .docm（启用宏的文档）
+
+运行
+----
+- 全文转换：Alt+F8 → 选择 ConvertAllLaTeXFormulas → 运行
+- 选区转换：选中一段文字 → Alt+F8 → ConvertLaTeXInSelection → 运行
+
+使用前建议
+----------
+1. 先备份文档
+2. 你可将 $$ 全部替换为 $；宏同时支持两种写法
+3. 块级公式请保持「整段只有公式」以便自动居中编号，例如：
+     $V_{vul} = \{v \in V \mid f_{audit}(v) = 1\}$
+4. 若仍有残留 $ 符号，可用 Ctrl+H 全局替换
+
+块级 vs 行内判定
+----------------
+- 段落去空白后内容恰好等于 $公式$ 或 $$公式$$ → 块级（居中+编号）
+- 公式嵌在句子中 → 行内（不改变段落对齐）
+
+已知限制
+--------
+- 依赖 Word 内置 LaTeX 解析能力；\mathbb、\text、\mid 等通常在 M365 中可用
+- 若某条公式 BuildUp 失败，该处会保留原文
+- 编号为简单顺序 (1)(2)...，如需「式(1)」等格式可在 FormatDisplayEquation 中修改
+- 不处理表格、页眉页脚、文本框内的公式
+
+WPS 说明
+--------
+WPS 的 VBA 对象模型可能与 Word 不同（OMaths 集合可能不存在或行为不一致）。
+若要在 WPS 使用，需在其 VBA 编辑器中测试 ActiveDocument.OMaths 是否可用；
+不可用则考虑改用 Word 处理，或后续接入 Pandoc 等外部转换方案。
