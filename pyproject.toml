@@ -46,9 +46,9 @@ patent-math = "convert_latex_docx:main"
 docx-latex-math = "convert_latex_docx:main"
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USER/patent-math-tool"
-Repository = "https://github.com/YOUR_USER/patent-math-tool"
-Issues = "https://github.com/YOUR_USER/patent-math-tool/issues"
+Homepage = "https://github.com/cgflag/WPS-LaTex2Equation-tool"
+Repository = "https://github.com/cgflag/WPS-LaTex2Equation-tool"
+Issues = "https://github.com/cgflag/WPS-LaTex2Equation-tool/issues"
 
 [tool.setuptools]
 py-modules = ["convert_latex_docx"]

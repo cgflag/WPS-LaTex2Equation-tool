@@ -21,4 +21,4 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Requires `MML2OMML.XSL` from Microsoft Office install (no Word COM / OMath API at runtime)
 - Output opens in **WPS** and Microsoft Word as native editable equations
 
-[1.0.0]: https://github.com/YOUR_USER/patent-math-tool/releases/tag/v1.0.0
+[1.0.0]: https://github.com/cgflag/WPS-LaTex2Equation-tool/releases/tag/v1.0.0
