@@ -2,10 +2,10 @@ __pycache__/
 .pytest_cache/
 dist/
 build/
+docs/
+scripts/
+*.spec
 *.spec.bak
-# 忽略根目录自动生成的 spec，保留 scripts/ 内维护的打包配置
-/*.spec
-!scripts/*.spec
 examples/ci_smoke_out.docx
 *.py[cod]
 *.egg-info/
@@ -15,9 +15,10 @@ venv/
 *.log
 .DS_Store
 Thumbs.db
-# 仅提交 examples 内演示 docx，避免误传本地专利/样例
+# 仅提交 examples 内脱敏演示 docx
 *.docx
 !examples/demo_before.docx
 !examples/demo_after.docx
 *_converted.docx
+*_公式版.docx
 sample_*.docx

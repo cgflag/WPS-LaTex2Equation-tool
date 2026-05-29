@@ -10,14 +10,11 @@
 
 [English](#english) · [示例对比](examples/) · [更新日志](CHANGELOG.md)
 
-<!-- 录屏 GIF 放到 docs/assets/demo.gif 后取消注释 -->
-<!-- ![演示](docs/assets/demo.gif) -->
-
 | 转换前 | 转换后 |
 |--------|--------|
 | [`examples/demo_before.docx`](examples/demo_before.docx) | [`examples/demo_after.docx`](examples/demo_after.docx) |
 
-用 **WPS 文字** 或 Word 打开上表两个文件即可对比效果。
+用 **WPS 文字** 或 Word 打开上表两个脱敏示例即可对比效果。
 
 ---
 
@@ -70,50 +67,36 @@ pip install -e .
 
 也可：`pip install -r requirements.txt`（不含命令行别名）。
 
-### 图形界面（GUI，v1.1）
+### 图形界面（GUI）
 
 ```bash
 pip install -e ".[gui]"
 wps-latex2equation-gui
 # 或
 python -m gui
-# Windows 双击
-scripts\run_gui.bat
 ```
 
-- 选择或 **拖拽** docx 到窗口/拖放区 → 点击 **开始转换** → 默认另存为 `原名_公式版.docx`
-- 启动时检测 `MML2OMML.XSL`，未找到则 **禁止转换** 并提示
-- 显示成功/失败数量，失败公式列表；完成后可 **打开输出文件夹**
+- 选择或 **拖拽** docx 到拖放区 → **开始转换** → 默认另存为 `原名_公式版.docx`
+- 启动时检测 `MML2OMML.XSL`，未找到则禁止转换并提示
+- 显示成功/失败数量；完成后可打开输出文件夹
 
-### 一行命令（推荐先试示例）
+### 命令行
 
 ```bash
 python convert_latex_docx.py examples/demo_before.docx examples/demo_after.docx
 ```
 
-安装 `-e` 后可用短命令：
+安装 `-e` 后：
 
 ```bash
 patent-math 你的文档.docx 输出.docx
-# 别名：docx-latex-math
 ```
 
 ### 常用参数
 
 ```bash
-# 默认输出：input_converted.docx
-python convert_latex_docx.py 说明书.docx
-
-# 指定字号（小四 = 12pt）
 python convert_latex_docx.py 说明书.docx 说明书_公式版.docx --size 小四
-
-# 块级公式制表位：按页面宽度自适应（默认）
 python convert_latex_docx.py 说明书.docx out.docx --tab-mode page
-
-# 按字符数设制表位（兼容旧宏习惯）
-python convert_latex_docx.py 说明书.docx out.docx --tab-mode chars --tab-center-chars 21 --tab-right-chars 44
-
-# 指定 XSL（仅 WPS、未装 Office 时若另有 XSL 副本）
 set PATENT_MATH_MML2OMML=C:\Program Files\Microsoft Office\root\Office16\MML2OMML.XSL
 python convert_latex_docx.py 说明书.docx out.docx --xsl "%PATENT_MATH_MML2OMML%"
 ```
@@ -124,7 +107,7 @@ python convert_latex_docx.py 说明书.docx out.docx --xsl "%PATENT_MATH_MML2OMM
 |------|------|
 | 句中 `$E=mc^2$` | 行内公式 |
 | 整段只有 `$$...$$` 或单独一行 `$...$` | 块级：居中 + 右侧 `(1)(2)...` |
-| 某条公式解析失败 | 保留 `$...$` 原文，其余照常转换 |
+| 某条公式解析失败 | 保留 `$...$` 原文 |
 
 ---
 
@@ -132,8 +115,8 @@ python convert_latex_docx.py 说明书.docx out.docx --xsl "%PATENT_MATH_MML2OMM
 
 | 内容 | 说明 |
 |------|------|
-| ✅ **MIT 开源** | 单文件 CLI、LaTeX→OMML、行内/块级识别、制表位编号 |
-| 🔒 未包含（可 Pro / 闭源） | 批量文件夹、GUI、专利模板 preset、题注/目录一体化 |
+| ✅ **MIT 开源** | CLI、GUI、LaTeX→OMML、行内/块级识别、制表位编号 |
+| 🔒 未包含 | 批量文件夹、专利模板 preset、题注/目录一体化 |
 
 ---
 
@@ -141,18 +124,14 @@ python convert_latex_docx.py 说明书.docx out.docx --xsl "%PATENT_MATH_MML2OMM
 
 ```
 WPS-LaTex2Equation-tool/
-├── convert_latex_docx.py    # 主程序
+├── convert_latex_docx.py
+├── gui/
 ├── pyproject.toml
 ├── requirements.txt
-├── examples/                # 转换前后对比
+├── examples/          # 脱敏演示 docx
 ├── tests/
-├── .github/workflows/       # CI
-├── scripts/build_examples.py
-├── docs/xiaohongshu/        # 推广文案（可选）
-└── legacy/                  # 旧版 WPS VBA 宏
+└── .github/workflows/
 ```
-
-重新生成示例：`python scripts/build_examples.py`
 
 ---
 
@@ -167,9 +146,9 @@ pytest -q
 
 ## 已知限制
 
-- 仅处理正文 `word/document.xml`（**不含**页眉页脚、文本框、表格内文字）
-- LaTeX 命令集受 `latex2mathml` 限制，极复杂宏可能失败
-- `MML2OMML.XSL` 版权归 Microsoft，**不能随本仓库分发**，需本机 Office 或自行指定路径
+- 仅处理正文 `word/document.xml`（不含页眉页脚、文本框、表格）
+- LaTeX 子集受 `latex2mathml` 限制
+- `MML2OMML.XSL` 需本机 Office，不能随仓库分发
 
 ---
 
@@ -183,14 +162,15 @@ pytest -q
 
 ## English
 
-**WPS-LaTex2Equation-tool** — Batch convert `$...$` / `$$...$$` LaTeX in `.docx` to native **OMML** equations. No MathType, no Word COM at runtime. Display equations: centered with `(1)(2)...` tab numbering. Output opens and edits in **WPS Office** and Microsoft Word.
+Batch convert `$...$` / `$$...$$` LaTeX in `.docx` to native **OMML** for **WPS** and Word. No MathType, no Word COM at runtime.
 
 ```bash
-git clone https://github.com/cgflag/WPS-LaTex2Equation-tool.git
-cd WPS-LaTex2Equation-tool && pip install -e .
+pip install -e ".[gui]"
+python -m gui
+# or
 python convert_latex_docx.py examples/demo_before.docx examples/demo_after.docx
 ```
 
-Requires `MML2OMML.XSL` from Microsoft Office (`--xsl` or env `PATENT_MATH_MML2OMML`).
+Requires `MML2OMML.XSL` from Microsoft Office.
 
 License: [MIT](LICENSE)

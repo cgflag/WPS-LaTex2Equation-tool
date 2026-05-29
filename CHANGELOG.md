@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Changed
+
+- 仓库不再跟踪 `docs/`、`scripts/`、`dist/`（仅保留本地）；README 已同步
+
+## [1.1.2] - 2026-05-29
+
+### Fixed
+
+- GUI 拖放：用队列在主线程处理，修复 GIL 崩溃
+
 ## [1.1.0] - 2026-05-29
 
 ### Added
