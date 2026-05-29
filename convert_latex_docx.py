@@ -14,7 +14,7 @@ Environment:
 
 from __future__ import annotations
 
-__version__ = "1.0.0"
+__version__ = "1.1.2"
 
 import argparse
 import os
@@ -447,7 +447,7 @@ def process_document_xml(
     xslt,
     override_sz: int | None,
     tab_cfg: TabLayoutConfig,
-) -> tuple[bytes, int, int]:
+) -> tuple[bytes, int, int, list[str]]:
     root = etree.fromstring(xml_bytes)
     body = root.find("w:body", NSMAP)
     if body is None:
@@ -457,6 +457,7 @@ def process_document_xml(
 
     ok = 0
     fail = 0
+    failed_formulas: list[str] = []
     display_num = 0
     new_children: list[etree._Element] = []
 
@@ -507,6 +508,8 @@ def process_document_xml(
             except Exception:
                 new_children.append(p)
                 fail += 1
+                if latex:
+                    failed_formulas.append(latex)
             body.remove(p)
             continue
 
@@ -523,6 +526,7 @@ def process_document_xml(
                 except Exception:
                     rebuilt.append(("text", make_text_run(f"${value}$", wrpr)))
                     fail += 1
+                    failed_formulas.append(value)
 
         ppr = source_ppr
         for child in list(p):
@@ -548,7 +552,12 @@ def process_document_xml(
     for p in new_children:
         body.append(p)
 
-    return etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone="yes"), ok, fail
+    return (
+        etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone="yes"),
+        ok,
+        fail,
+        failed_formulas,
+    )
 
 
 def convert_docx(
@@ -557,7 +566,7 @@ def convert_docx(
     override_sz: int | None,
     tab_cfg: TabLayoutConfig,
     xsl_path: Path | None = None,
-) -> tuple[int, int]:
+) -> tuple[int, int, list[str]]:
     xsl_path = find_mml2omml_xsl(xsl_path)
     xslt = etree.XSLT(etree.parse(str(xsl_path)))
 
@@ -567,7 +576,7 @@ def convert_docx(
             zin.extractall(tmp_dir)
 
         doc_xml = tmp_dir / "word" / "document.xml"
-        new_xml, ok, fail = process_document_xml(
+        new_xml, ok, fail, failed_formulas = process_document_xml(
             doc_xml.read_bytes(), xslt, override_sz, tab_cfg
         )
         doc_xml.write_bytes(new_xml)
@@ -577,7 +586,7 @@ def convert_docx(
                 if file.is_file():
                     zout.write(file, file.relative_to(tmp_dir).as_posix())
 
-    return ok, fail
+    return ok, fail, failed_formulas
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -646,7 +655,7 @@ def main(argv: list[str] | None = None) -> int:
     xsl = Path(args.xsl).resolve() if args.xsl else None
 
     try:
-        ok, fail = convert_docx(input_path, output_path, override_sz, tab_cfg, xsl)
+        ok, fail, _ = convert_docx(input_path, output_path, override_sz, tab_cfg, xsl)
     except FileNotFoundError as e:
         print(str(e), file=sys.stderr)
         return 1

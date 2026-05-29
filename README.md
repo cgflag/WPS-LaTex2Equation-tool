@@ -70,6 +70,21 @@ pip install -e .
 
 也可：`pip install -r requirements.txt`（不含命令行别名）。
 
+### 图形界面（GUI，v1.1）
+
+```bash
+pip install -e ".[gui]"
+wps-latex2equation-gui
+# 或
+python -m gui
+# Windows 双击
+scripts\run_gui.bat
+```
+
+- 选择或 **拖拽** docx 到窗口/拖放区 → 点击 **开始转换** → 默认另存为 `原名_公式版.docx`
+- 启动时检测 `MML2OMML.XSL`，未找到则 **禁止转换** 并提示
+- 显示成功/失败数量，失败公式列表；完成后可 **打开输出文件夹**
+
 ### 一行命令（推荐先试示例）
 
 ```bash

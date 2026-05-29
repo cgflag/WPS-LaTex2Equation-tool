@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "patent-math-tool"
-version = "1.0.0"
+version = "1.1.2"
 description = "Batch convert $...$ / $$...$$ LaTeX in docx to native OMML equations for Word and WPS (no COM, no MathType)."
 readme = "README.md"
 license = { text = "MIT" }
@@ -40,10 +40,15 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+gui = [
+    "customtkinter>=5.2.0",
+    "windnd>=1.0.7; sys_platform == 'win32'",
+]
 
 [project.scripts]
 patent-math = "convert_latex_docx:main"
 docx-latex-math = "convert_latex_docx:main"
+wps-latex2equation-gui = "gui.app:run"
 
 [project.urls]
 Homepage = "https://github.com/cgflag/WPS-LaTex2Equation-tool"
@@ -52,6 +57,10 @@ Issues = "https://github.com/cgflag/WPS-LaTex2Equation-tool/issues"
 
 [tool.setuptools]
 py-modules = ["convert_latex_docx"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gui*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

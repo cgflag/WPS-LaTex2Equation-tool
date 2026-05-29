@@ -88,7 +88,7 @@ def main() -> None:
     write_demo_before(before)
     print(f"Created: {before}")
 
-    ok, fail = convert_docx(before, after, override_sz=None, tab_cfg=TabLayoutConfig())
+    ok, fail, _ = convert_docx(before, after, override_sz=None, tab_cfg=TabLayoutConfig())
     print(f"Converted: {ok} ok, {fail} fail -> {after}")
 
 

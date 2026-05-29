@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.0] - 2026-05-29
+
+### Added
+
+- Desktop GUI (`gui/app.py`, CustomTkinter): file picker, drag-and-drop (Windows), font size, XSL detection
+- Console entry: `wps-latex2equation-gui`
+- `convert_docx()` returns list of failed formula texts for GUI display
+- Optional install: `pip install -e ".[gui]"`
+
 ## [1.0.0] - 2026-05-29
 
 ### Added
