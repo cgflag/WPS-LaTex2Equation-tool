@@ -8,7 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- 仓库不再跟踪 `docs/`、`scripts/`、`dist/`（仅保留本地）；README 已同步
+- README：中文为主 + 锚点切换 English；定位「AI `$LaTeX$` → WPS/Word 原生公式」（口语钩子注明偏 Gemini）；论文/专利仅作场景说明；exe 另发
+- `pyproject.toml`：description / keywords 对齐 AI×docx×WPS（去掉 patent keyword）
+- 新增 `assets/before-after.svg` 供 README 展示（中文标注）
+
+### Notes
+
+- 仓库不再跟踪本地 `scripts/`、`dist/`；桌面 exe 若有发布，走站外渠道，不作为本仓库主推路径
 
 ## [1.1.2] - 2026-05-29
 

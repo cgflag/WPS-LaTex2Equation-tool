@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "patent-math-tool"
 version = "1.1.2"
-description = "Batch convert $...$ / $$...$$ LaTeX in docx to native OMML equations for Word and WPS (no COM, no MathType)."
+description = "AI $LaTeX$ in docx → native OMML for WPS and Word (no COM, no MathType)."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
@@ -17,8 +17,9 @@ keywords = [
     "word",
     "omml",
     "mathml",
-    "patent",
+    "chatgpt",
     "formula",
+    "ai",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

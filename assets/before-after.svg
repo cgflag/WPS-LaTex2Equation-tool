@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">AI docx LaTeX to WPS native equations</title>
+  <desc id="desc">Left: plain dollar LaTeX text. Right: native editable OMML with numbering.</desc>
+  <rect width="960" height="420" fill="#f6f8fa"/>
+  <text x="480" y="36" text-anchor="middle" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" fill="#24292f">AI docx &#183; $LaTeX$ &#8594; WPS / Word &#21407;&#29983;&#20844;&#24335;</text>
+
+  <!-- Before panel -->
+  <rect x="32" y="56" width="430" height="320" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+  <rect x="32" y="56" width="430" height="40" rx="10" fill="#eaeef2"/>
+  <rect x="32" y="80" width="430" height="16" fill="#eaeef2"/>
+  <text x="247" y="82" text-anchor="middle" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#57606a">&#36716;&#25442;&#21069;</text>
+
+  <text x="56" y="130" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="15" fill="#24292f">&#26681;&#25454;&#33021;&#37327;&#20851;&#31995;&#21487;&#24471;</text>
+  <text x="56" y="158" font-family="Consolas, Menlo, monospace" font-size="15" fill="#0969da">$E = mc^2$</text>
+  <text x="56" y="186" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="15" fill="#24292f">&#65292;&#31215;&#20998;&#24418;&#24335;&#20026;</text>
+  <text x="56" y="230" font-family="Consolas, Menlo, monospace" font-size="15" fill="#0969da">$$\int_0^1 x^2\,dx$$</text>
+  <text x="56" y="270" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="13" fill="#656d76">docx &#20013;&#30340;&#32431;&#25991;&#26412;&#65292;&#26080;&#27861;&#24403;&#20844;&#24335;&#32534;&#36753;</text>
+
+  <!-- Arrow -->
+  <path d="M478 210 L498 210" stroke="#0969da" stroke-width="3" stroke-linecap="round"/>
+  <path d="M490 200 L505 210 L490 220" fill="none" stroke="#0969da" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- After panel -->
+  <rect x="498" y="56" width="430" height="320" rx="10" fill="#ffffff" stroke="#d0d7de"/>
+  <rect x="498" y="56" width="430" height="40" rx="10" fill="#ddf4ff"/>
+  <rect x="498" y="80" width="430" height="16" fill="#ddf4ff"/>
+  <text x="713" y="82" text-anchor="middle" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#0550ae">&#36716;&#25442;&#21518;</text>
+
+  <text x="522" y="130" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="15" fill="#24292f">&#26681;&#25454;&#33021;&#37327;&#20851;&#31995;&#21487;&#24471;</text>
+  <text x="522" y="168" font-family="Cambria Math, Times New Roman, serif" font-size="22" font-style="italic" fill="#24292f">E = mc&#178;</text>
+  <text x="522" y="200" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="15" fill="#24292f">&#65292;&#31215;&#20998;&#24418;&#24335;&#20026;</text>
+  <text x="640" y="255" text-anchor="middle" font-family="Cambria Math, Times New Roman, serif" font-size="24" font-style="italic" fill="#24292f">&#8747;&#8320;&#185; x&#178; dx</text>
+  <text x="880" y="255" text-anchor="end" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#24292f">(1)</text>
+  <text x="522" y="300" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="13" fill="#1a7f37">&#21407;&#29983; OMML &#183; &#21487;&#22312; WPS / Word &#20013;&#21452;&#20987;&#32534;&#36753;</text>
+
+  <text x="480" y="404" text-anchor="middle" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="12" fill="#656d76">&#19981;&#21551; Word &#183; &#19981;&#29992; MathType &#183; &#22833;&#36133;&#22788;&#20445;&#30041;&#21407; $...$</text>
+</svg>
